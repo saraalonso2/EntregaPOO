@@ -10,7 +10,7 @@ Un autor independiente desea crear un pequeño programa de consola en JAVA almac
     4) Mostrar información actual de libros 
     5) Salir (se borrará toda la información) 
 |--------------------------------------------------------| 
-Seleccione una opción (1-4): 
+Seleccione una opción (1-5): 
 ```
 Las opciones del programa permiten realizar lo siguiente: 
  1. Crear un nuevo array de Libros vacío (todos sus elementos son null) del tamaño especificado por el usuario por teclado. Se perderá cualquier instancia anterior que hubiera. 

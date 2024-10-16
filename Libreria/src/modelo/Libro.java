@@ -59,4 +59,9 @@ public class Libro {
     public void setPrecioLibro(double precioLibro){
         this.precioLibro=precioLibro;
     }
+
+    //Método para calcular el tiempo de lectura en minutos de un libro
+    public int calculoTiempoLecturaLibro(int tiempoLectura){
+        return this.numPaginasLibro*tiempoLectura;
+    }
 }

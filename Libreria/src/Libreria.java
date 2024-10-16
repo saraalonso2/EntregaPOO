@@ -1,3 +1,5 @@
+/*Autor: Sara Alonso de la Iglesia */
+
 import com.coti.tools.Esdia;
 import modelo.Libro;
 import modelo.Autor;
@@ -26,6 +28,7 @@ Seleccione una opción (1-5):  */
     System.out.println("    3) Añadir nuevo libro al almacén.");
     System.out.println("    4) Mostrar información actual de libros.");
     System.out.println("    5) Salir (Se borrará toda la información).");
+    System.out.println("|----------------------------------------------------------|");
     do{
         opcion=Esdia.readInt("Seleccione una opción(1-5): ");
         switch (opcion) {
@@ -36,7 +39,7 @@ Seleccione una opción (1-5):  */
                 establecerRitmoLectura();
                 break;
             case 3:
-                anadirLibro();
+                añadirLibro();
                 break;
             case 4:
                 mostrarInfoLibros();
@@ -47,7 +50,28 @@ Seleccione una opción (1-5):  */
             default: 
                 System.out.println("Opción no válida.");
         }
+    }while(opcion!=5);
+
     }
+
+    //Método para opción 1
+    private static void nuevoAlmacen(){
+        int tamañoNuevoAlmacen= Esdia.readInt("Inserte el tamaño del nuevo almacén: ");
+        Almacen almacen1=new Almacen(tamañoNuevoAlmacen, null);
+        System.out.printf("Tamaño del nuevo almacen creado: %d",almacen1.getLibrosAlmacen().length);
+    }
+    //Método para opción 2
+    private static void establecerRitmoLectura(){
+        int ritmoLectura=Esdia.readInt("Introduzca ritmo de lectura por minuto (páginas/minuto): ");
+        libros.calculoTiempoLecturaLibro(ritmoLectura);
+
+    }
+    //Método para opción 3
+    private static void añadirLibro(){
+
+    }
+    //Método para opción 4
+    private static void mostrarInfoLibros(){
 
     }
 }
