@@ -2,15 +2,15 @@ package modelo;
 
 //Almacen : array de Libro, tamaño fijo inicial. 
 public class Almacen {
-    private int tamañoAlmacen=50;
+    private int tamañoAlmacen=50; //fijo el tamaño inicial
     private Libro[] librosAlmacen;
-
-    private int contadorLibros=0;
+    private int contadorLibros; //atributo auxiliar para contar los libros añadidos
 
     //Constructor
     public Almacen(int tamañoAlmacen){
         this.tamañoAlmacen=tamañoAlmacen;
         this.librosAlmacen=new Libro[tamañoAlmacen];
+        this.contadorLibros=0;
     }
 
     //Getters
@@ -63,5 +63,4 @@ public class Almacen {
         }
         return valorTotal;
     }
-
 }

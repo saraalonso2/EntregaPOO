@@ -40,6 +40,12 @@ public class Autor {
         return (this.nombreAutor+" "+this.apellidosAutor);
     }
 
-    //
-
+    //Método para poner sí o no en el Premio Planeta
+    public String respuestaPremio(){
+        if (premioPlaneta==true){
+            return "Sí";
+        }else{
+            return "No";
+        }
+    }
 }

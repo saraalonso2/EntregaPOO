@@ -22,19 +22,15 @@ public class Libro {
     public Autor getAutorLibro(){
         return autorLibro;
     }
-
     public String getTituloLibro(){
         return tituloLibro;
     }
-
     public int getAnoPublicacion(){
         return anoPublicacion;
     }
-
     public int getNumeroPaginas(){
         return numPaginasLibro;
     }
-
     public double getPrecioLibro(){
         return precioLibro;
     }
@@ -43,19 +39,15 @@ public class Libro {
     public void setAutorLibro(Autor autorLibro){
         this.autorLibro=autorLibro;
     }
-
     public void setTituloLibro(String tituloLibro){
         this.tituloLibro=tituloLibro;
     }
-
     public void setAnoPublicacion(int anoPublicacion){
         this.anoPublicacion=anoPublicacion;
     }
-
     public void setNumeroPaginas(int numPaginasLibro){
         this.numPaginasLibro=numPaginasLibro;
     }
-
     public void setPrecioLibro(double precioLibro){
         this.precioLibro=precioLibro;
     }
@@ -63,5 +55,11 @@ public class Libro {
     //Método para calcular el tiempo de lectura en minutos de un libro
     public int calculoTiempoLecturaLibro(int tiempoLectura){
         return this.numPaginasLibro*tiempoLectura;
+    }
+
+    //Método para mostrar la información de un libro
+    public void infoLibro(int tiempoLectura){
+        /*FALTA PONER BIEN LOS PORCENTAJES PARA QUE QUEDE COLOCADO */
+        System.out.printf("| %s | %d | %s | %s | %d | %d | %.2f |",this.tituloLibro,this.anoPublicacion,this.autorLibro.nombreCompletoAutor(),this.autorLibro.respuestaPremio(),this.numPaginasLibro,calculoTiempoLecturaLibro(tiempoLectura),this.precioLibro);
     }
 }
