@@ -6,6 +6,10 @@ import modelo.Autor;
 import modelo.Almacen;
 
 public class Libreria {
+    private static Almacen almacen1;
+    private static Autor autor1;
+    private static Libro libro1;
+    private static int ritmoLectura=1; //por defecto es 1 página por minuto
     public static void main(String[] args) throws Exception {
 /*
 |--------------------------------------------------------| 
@@ -57,19 +61,39 @@ Seleccione una opción (1-5):  */
     //Método para opción 1
     private static void nuevoAlmacen(){
         int tamañoNuevoAlmacen= Esdia.readInt("Inserte el tamaño del nuevo almacén: ");
-        Almacen almacen1=new Almacen(tamañoNuevoAlmacen, null);
+        almacen1=new Almacen(tamañoNuevoAlmacen);
         System.out.printf("Tamaño del nuevo almacen creado: %d",almacen1.getLibrosAlmacen().length);
     }
     //Método para opción 2
     private static void establecerRitmoLectura(){
-        int ritmoLectura=Esdia.readInt("Introduzca ritmo de lectura por minuto (páginas/minuto): ");
-        libros.calculoTiempoLecturaLibro(ritmoLectura);
+        ritmoLectura=Esdia.readInt("Introduzca ritmo de lectura por minuto (páginas/minuto): ");
+        System.out.printf("Ritmo de lectura establecido: %d páginas por minuto", ritmoLectura);
 
     }
     //Método para opción 3
     private static void añadirLibro(){
-
+        //si el almacén no está creado,no puede añadir libro
+        if (almacen1==null){
+            System.err.println("Error. No se ha creado almacén para poder añadir el libro.");
+            return;
+        }
+        //pedimos al usuario por pantalla que introduzca los datos del autor
+        String nombre=Esdia.readString("Introduzca nombre del autor: ");
+        String apellidos=Esdia.readString("Introduzca apellidos del autor: ");
+        boolean premioPlanet=Esdia.yesOrNo("¿Ha obtenido el autor el premio Planeta? (y/n): ");
+        //creamos el Autor
+        autor1 = new Autor(nombre,apellidos,premioPlanet);
+        //pedimos al usuario por pantalla que introduzca los demás datos del libro
+        String titulo=Esdia.readString("Introduzca nombre del libro: ");
+        int añoPublicar=Esdia.readInt("Introduzca año de publicación del libro: ");
+        int paginas=Esdia.readInt("Introduzca páginas del libro: ");
+        double precio=Esdia.readDouble("Introduzca precio del libro: ");
+        //creamos el Libro
+        libro1 = new Libro(autor1,titulo,añoPublicar,paginas,precio);
+        // Lo último que nos queda por hacer es añadir el libro al almacén
+        almacen1.añadirLibro(libro1);
     }
+
     //Método para opción 4
     private static void mostrarInfoLibros(){
 
