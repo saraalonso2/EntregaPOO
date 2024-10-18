@@ -1,6 +1,6 @@
-/*Autor: Sara Alonso de la Iglesia */
+/*Autor: Sara Alonso de la Iglesia, @saraalonso2 */
 
-import com.coti.tools.Esdia;
+import static com.coti.tools.Esdia.*;
 import modelo.Libro;
 import modelo.Autor;
 import modelo.Almacen;
@@ -24,7 +24,7 @@ public class Libreria {
         System.out.println("    5) Salir (Se borrará toda la información).");
         System.out.println("|----------------------------------------------------------|");
         do{
-            opcion=Esdia.readInt("Seleccione una opción(1-5): ");
+            opcion=readInt("Seleccione una opción(1-5): ");
             switch (opcion) {
                 case 1:
                     nuevoAlmacen();
@@ -49,14 +49,14 @@ public class Libreria {
 
     //Método para opción 1
     private static void nuevoAlmacen(){
-        tamañoNuevoAlmacen= Esdia.readInt("Inserte el tamaño del nuevo almacén: ");
+        tamañoNuevoAlmacen= readInt("Inserte el tamaño del nuevo almacén: ");
         almacen1=new Almacen(tamañoNuevoAlmacen);
         System.out.printf("Tamaño del nuevo almacen creado: %d \n",almacen1.getLibrosAlmacen().length);
     }
 
     //Método para opción 2
     private static void establecerRitmoLectura(){
-        ritmoLectura=Esdia.readInt("Introduzca ritmo de lectura por minuto (páginas/minuto): ");
+        ritmoLectura=readInt("Introduzca ritmo de lectura por minuto (páginas/minuto): ");
         System.out.printf("Ritmo de lectura establecido: %d páginas por minuto \n", ritmoLectura);
     }
 
@@ -73,16 +73,16 @@ public class Libreria {
             return;
         }
         //pedimos al usuario por pantalla que introduzca los datos del autor
-        String nombre=Esdia.readString_ne("Introduzca nombre del autor: ");
-        String apellidos=Esdia.readString_ne("Introduzca apellidos del autor: ");
-        boolean premioPlanet=Esdia.yesOrNo("¿Ha obtenido el autor el premio Planeta");
+        String nombre=readString_ne("Introduzca nombre del autor: ");
+        String apellidos=readString_ne("Introduzca apellidos del autor: ");
+        boolean premioPlanet=yesOrNo("¿Ha obtenido el autor el premio Planeta");
         //creamos el Autor
         autor1 = new Autor(nombre,apellidos,premioPlanet);
         //pedimos al usuario por pantalla que introduzca los demás datos del libro
-        String titulo=Esdia.readString_ne("Introduzca nombre del libro: ");
-        int añoPublicar=Esdia.readInt("Introduzca año de publicación del libro: ");
-        int paginas=Esdia.readInt("Introduzca páginas del libro: ");
-        double precio=Esdia.readDouble("Introduzca precio del libro: ");
+        String titulo=readString_ne("Introduzca nombre del libro: ");
+        int añoPublicar=readInt("Introduzca año de publicación del libro: ");
+        int paginas=readInt("Introduzca páginas del libro: ");
+        double precio=readDouble("Introduzca precio del libro: ");
         //creamos el Libro
         libro1 = new Libro(autor1,titulo,añoPublicar,paginas,precio);
         // Lo último que nos queda por hacer es añadir el libro al almacén
