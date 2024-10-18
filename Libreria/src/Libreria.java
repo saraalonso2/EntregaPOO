@@ -62,12 +62,12 @@ Seleccione una opción (1-5):  */
     private static void nuevoAlmacen(){
         int tamañoNuevoAlmacen= Esdia.readInt("Inserte el tamaño del nuevo almacén: ");
         almacen1=new Almacen(tamañoNuevoAlmacen);
-        System.out.printf("Tamaño del nuevo almacen creado: %d",almacen1.getLibrosAlmacen().length);
+        System.out.printf("Tamaño del nuevo almacen creado: %d \n",almacen1.getLibrosAlmacen().length);
     }
     //Método para opción 2
     private static void establecerRitmoLectura(){
         ritmoLectura=Esdia.readInt("Introduzca ritmo de lectura por minuto (páginas/minuto): ");
-        System.out.printf("Ritmo de lectura establecido: %d páginas por minuto", ritmoLectura);
+        System.out.printf("Ritmo de lectura establecido: %d páginas por minuto \n", ritmoLectura);
 
     }
     //Método para opción 3
@@ -80,7 +80,7 @@ Seleccione una opción (1-5):  */
         //pedimos al usuario por pantalla que introduzca los datos del autor
         String nombre=Esdia.readString_ne("Introduzca nombre del autor: ");
         String apellidos=Esdia.readString_ne("Introduzca apellidos del autor: ");
-        boolean premioPlanet=Esdia.yesOrNo("¿Ha obtenido el autor el premio Planeta? (y/n): ");
+        boolean premioPlanet=Esdia.yesOrNo("¿Ha obtenido el autor el premio Planeta");
         //creamos el Autor
         autor1 = new Autor(nombre,apellidos,premioPlanet);
         //pedimos al usuario por pantalla que introduzca los demás datos del libro
@@ -99,10 +99,10 @@ Seleccione una opción (1-5):  */
         //Calculemos los anchos máximos de cada columna
         int maxTitulo=6; //Como mínimo, título tiene 6 caracteres para ajustar a la tabla
         int maxAutor=5;
-        int maxAno=4; //estamos en 2024, no puede haber un tamaño más grande que 4
+        int maxAno=15; //Lo máximo que va a tener es el Año Publicación, porque estamos en 2024
         int maxPlaneta=14; //Lo máximo que va a tener es el de Premio Planeta, la respuesta es Sí o No
         int maxPaginas=7;
-        int maxTiempo=6;
+        int maxTiempo=20; //Tiempo Lectura (min)
         int maxPrecio=6;
         for (int i=0;i<almacen1.getLibrosAlmacen().length;i++) {
             Libro libros=almacen1.getLibrosAlmacen()[i];
@@ -133,34 +133,52 @@ Seleccione una opción (1-5):  */
             }
         }
         //Calculamos el ancho total de la tabla con los separadores y los |.
-        int ANCHO_TOTAL=maxTitulo+maxAutor+maxAno+maxPlaneta+maxPaginas+maxTiempo+maxPrecio+19; 
-        //Procedemos a mostrar la tabla:
+        int ANCHO_TOTAL=maxTitulo+maxAutor+maxAno+maxPlaneta+maxPaginas+maxTiempo+maxPrecio+21; 
+      
         String barrita="-".repeat(ANCHO_TOTAL);
         String espacios=" ".repeat(ANCHO_TOTAL-21);
+
+        //Construimos los formatos dinámicos para el contenido:
+        String formatoTitulo="%-"+maxTitulo+"s"; //a la izquierda
+        String formatoAutor="%-"+maxAutor+"s"; //a la izquierda
+        String formatoAno="%-"+maxAno+"s"; //a la izquierda
+        String formatoPremio="%-"+maxPlaneta+"s"; //a la izquierda
+        String formatoPaginas="%"+maxPaginas+"s"; //centrado
+        String formatoTiempo="%"+maxTiempo+"s"; //a la derecha
+        String formatoPrecio="%"+maxPrecio+"s"; //a la derecha
+
+        //Procedemos a mostrar la tabla:
         //si no está creado el almacén o no hay libros añadidos, no hay tabla que mostrar
         if(almacen1==null || almacen1.getTamañoAlmacen()==0){
             System.out.println("No hay tabla que mostrar porque no hay libros en el almacén.");
             return;
         }
+        //Título y cabecera tabla
         System.out.println("|"+barrita+"|");
         System.out.println("| LIBROS EN EL ALMACÉN"+espacios+"|");
         System.out.println("|"+barrita+"|");
-        /*FALTA PONER BIEN LOS PORCENTAJES PARA QUE QUEDE COLOCADO */
-        System.out.printf("| %s   | %s    | %s   |   %s   |   %s    | %s     |   %s   |","Título", "Año Publicación", "Autor", "Premio planeta", "Páginas","Tiempo lectura minutos","Precio");
+        System.out.printf("| "+ formatoTitulo + " | "+ formatoAno + " | " + formatoAutor +" | " + formatoPremio + " | "+formatoPaginas+" | "+formatoTiempo+" | "+formatoPrecio+"|\n","Título", "Año Publicación", "Autor", "Premio planeta", "Páginas","Tiempo lectura (min)","Precio");
         System.out.println("|"+barrita+"|");
         //Imprimimos por pantalla la información de cada libro
-        for (int j=0;j<almacen1.getLibrosAlmacen().length;j++) {
-            Libro libros1=almacen1.getLibrosAlmacen()[j];
-            if(libros1!=null){
-                libros1.infoLibro(ritmoLectura);
+        for (Libro libro : almacen1.getLibrosAlmacen()) {
+            if(libro!=null){
+                //formateamos cada dato según ancho máximo
+                String datosTitulo=String.format(formatoTitulo, libro.getTituloLibro());
+                String datosAno=String.format(formatoAno, libro.getAnoPublicacion());
+                String datosAutor=String.format(formatoAutor, libro.getAutorLibro().nombreCompletoAutor());
+                String datosPremio=String.format(formatoPremio, libro.getAutorLibro().respuestaPremio());
+                String datosPaginas=String.format(formatoPaginas, libro.getNumeroPaginas());
+                String datosTiempo=String.format(formatoTiempo, libro.calculoTiempoLecturaLibro(ritmoLectura));
+                String datosPrecio=String.format(formatoPrecio, libro.getPrecioLibro());
+                //imprimir por pantalla
+                System.err.println("| "+ datosTitulo + " | "+ datosAno + " | " + datosAutor + " | " + datosPremio + " | "+datosPaginas+" | "+datosTiempo+" | "+datosPrecio+" €|");
             }else{
                 System.err.println("No hay información de libros en esta posición.");
             }
         }
         System.out.println("|"+barrita+"|");
-        /*FALTA PONER BIEN LOS PORCENTAJES PARA QUE QUEDE COLOCADO */
-        System.out.printf("| Tiempo de lectura total del almacén: %d| ",almacen1.tiempoLecturaTotal(ritmoLectura));
-        System.out.printf("| Valor total del almacén: %.2f €|",almacen1.valorTotalAlmacen());
+        System.out.println("| Tiempo de lectura total del almacén:"+" ".repeat(ANCHO_TOTAL-maxPrecio-maxTiempo-43)+String.format(formatoTiempo,almacen1.tiempoLecturaTotal(ritmoLectura))+"min | "+" ".repeat(maxPrecio)+"|");
+        System.out.println("| Valor total del almacén:"+" ".repeat(ANCHO_TOTAL-maxPrecio-27)+String.format(formatoPrecio,almacen1.valorTotalAlmacen())+" €|");
         System.out.println("|"+barrita+"|");
     }
 }

@@ -56,10 +56,4 @@ public class Libro {
     public int calculoTiempoLecturaLibro(int tiempoLectura){
         return this.numPaginasLibro*tiempoLectura;
     }
-
-    //Método para mostrar la información de un libro
-    public void infoLibro(int tiempoLectura){
-        /*FALTA PONER BIEN LOS PORCENTAJES PARA QUE QUEDE COLOCADO */
-        System.out.printf("| %s | %d | %s | %s | %d | %d | %.2f |",this.tituloLibro,this.anoPublicacion,this.autorLibro.nombreCompletoAutor(),this.autorLibro.respuestaPremio(),this.numPaginasLibro,calculoTiempoLecturaLibro(tiempoLectura),this.precioLibro);
-    }
 }
