@@ -12,51 +12,39 @@ public class Libreria {
     private static int ritmoLectura=1; //por defecto es 1 página por minuto
     private static int tamañoNuevoAlmacen;
     public static void main(String[] args) throws Exception {
-/*
-|--------------------------------------------------------| 
-| MIS LIBROS                                            | 
-|-------------------------------------------------------| 
-    1) Nuevo almacén de libros 
-    2) Establecer ritmo de lectura (páginas por minuto) 
-    3) Añadir un nuevo libro al almacén 
-    4) Mostrar información actual de libros 
-    5) Salir (se borrará toda la información) 
-|-------------------------------------------------------| 
-Seleccione una opción (1-5):  */
-    //Menú con opciones
-    int opcion;
-    System.out.println("|----------------------------------------------------------|");
-    System.out.println("| MIS LIBROS                                                ");
-    System.out.println("|----------------------------------------------------------|");
-    System.out.println("    1) Nuevo almacén de libros.");
-    System.out.println("    2) Establecer ritmo de lectura (páginas por minuto).");
-    System.out.println("    3) Añadir nuevo libro al almacén.");
-    System.out.println("    4) Mostrar información actual de libros.");
-    System.out.println("    5) Salir (Se borrará toda la información).");
-    System.out.println("|----------------------------------------------------------|");
-    do{
-        opcion=Esdia.readInt("Seleccione una opción(1-5): ");
-        switch (opcion) {
-            case 1:
-                nuevoAlmacen();
-                break;
-            case 2:
-                establecerRitmoLectura();
-                break;
-            case 3:
-                añadirLibro();
-                break;
-            case 4:
-                mostrarInfoLibros();
-                break;
-            case 5:
-                System.out.println("Saliendo del almacén. ¡Adiós!");
-                break;
-            default: 
-                System.out.println("Opción no válida.");
-        }
-    }while(opcion!=5);
-
+        //Menú con opciones
+        int opcion;
+        System.out.println("|----------------------------------------------------------|");
+        System.out.println("| MIS LIBROS                                                ");
+        System.out.println("|----------------------------------------------------------|");
+        System.out.println("    1) Nuevo almacén de libros.");
+        System.out.println("    2) Establecer ritmo de lectura (páginas por minuto).");
+        System.out.println("    3) Añadir nuevo libro al almacén.");
+        System.out.println("    4) Mostrar información actual de libros.");
+        System.out.println("    5) Salir (Se borrará toda la información).");
+        System.out.println("|----------------------------------------------------------|");
+        do{
+            opcion=Esdia.readInt("Seleccione una opción(1-5): ");
+            switch (opcion) {
+                case 1:
+                    nuevoAlmacen();
+                    break;
+                case 2:
+                    establecerRitmoLectura();
+                    break;
+                case 3:
+                    añadirLibro();
+                    break;
+                case 4:
+                    mostrarInfoLibros();
+                    break;
+                case 5:
+                    System.out.println("Saliendo del almacén. ¡Adiós!");
+                    break;
+                default: 
+                    System.out.println("Opción no válida.");
+            }
+        }while(opcion!=5);
     }
 
     //Método para opción 1
@@ -65,12 +53,13 @@ Seleccione una opción (1-5):  */
         almacen1=new Almacen(tamañoNuevoAlmacen);
         System.out.printf("Tamaño del nuevo almacen creado: %d \n",almacen1.getLibrosAlmacen().length);
     }
+
     //Método para opción 2
     private static void establecerRitmoLectura(){
         ritmoLectura=Esdia.readInt("Introduzca ritmo de lectura por minuto (páginas/minuto): ");
         System.out.printf("Ritmo de lectura establecido: %d páginas por minuto \n", ritmoLectura);
-
     }
+
     //Método para opción 3
     private static void añadirLibro(){
         //si el almacén no está creado,no puede añadir libro
@@ -78,6 +67,7 @@ Seleccione una opción (1-5):  */
             System.err.println("Error. No se ha creado almacén para poder añadir el libro.");
             return;
         }
+        //si el almacén está lleno, no se puede añadir libro
         if(almacen1.getContadorLibros()>=tamañoNuevoAlmacen){
             System.err.println("Error. El almacén está lleno");
             return;
@@ -101,7 +91,7 @@ Seleccione una opción (1-5):  */
 
     //Método para opción 4
     private static void mostrarInfoLibros(){
-        //Calculemos los anchos máximos de cada columna
+        //Calculemos los anchos máximos de cada columna con un for
         int maxTitulo=6; //Como mínimo, título tiene 6 caracteres para ajustar a la tabla
         int maxAutor=5;
         int maxAno=15; //Lo máximo que va a tener es el Año Publicación, porque estamos en 2024
@@ -138,10 +128,11 @@ Seleccione una opción (1-5):  */
             }
         }
 
-        if((Integer.toString(almacen1.tiempoLecturaTotal(ritmoLectura))).length()>=maxTiempo){
+        //comparamos con la longitud de los valores totales
+        if((Integer.toString(almacen1.tiempoLecturaTotal(ritmoLectura))).length()>maxTiempo){
             maxTiempo=(Integer.toString(almacen1.tiempoLecturaTotal(ritmoLectura))).length();
         }
-        if((Double.toString(almacen1.valorTotalAlmacen())).length()>=maxPrecio){
+        if((Double.toString(almacen1.valorTotalAlmacen())).length()>maxPrecio){
             maxPrecio=(Double.toString(almacen1.valorTotalAlmacen())).length();
         }
 
@@ -158,7 +149,8 @@ Seleccione una opción (1-5):  */
         String formatoPremio="%-"+maxPlaneta+"s"; //a la izquierda
         String formatoTiempo="%"+maxTiempo+"s"; //a la derecha
         String formatoPrecio="%"+maxPrecio+"s"; //a la derecha
-        String formatoPaginas="%"+maxPaginas+"s"; //centrado
+        String formatoPaginas="%"+maxPaginas+"s"; //esto solo para mostrar la cabecera
+        //Para mostrar las páguinas de los libros quiero que me quede centrado en el medio, por tanto, lo voy a meter dentro del bucle
 
         //Procedemos a mostrar la tabla:
         //si no está creado el almacén o no hay libros añadidos, no hay tabla que mostrar
@@ -172,7 +164,7 @@ Seleccione una opción (1-5):  */
         System.out.println("|"+barrita+"|");
         System.out.printf("| "+ formatoTitulo + " | "+ formatoAno + " | " + formatoAutor +" | " + formatoPremio + " | "+formatoPaginas+" | "+formatoTiempo+" |   "+formatoPrecio+"|\n","Título", "Año Publicación", "Autor", "Premio planeta", "Páginas","Tiempo lectura (min)","Precio");
         System.out.println("|"+barrita+"|");
-        //Imprimimos por pantalla la información de cada libro
+        //Imprimimos por pantalla la información de cada libro con un for each
         for (Libro libro : almacen1.getLibrosAlmacen()) {
             if(libro!=null){
                 //formateamos cada dato según ancho máximo
@@ -180,10 +172,15 @@ Seleccione una opción (1-5):  */
                 String datosAno=String.format(formatoAno, libro.getAnoPublicacion());
                 String datosAutor=String.format(formatoAutor, libro.getAutorLibro().nombreCompletoAutor());
                 String datosPremio=String.format(formatoPremio, libro.getAutorLibro().respuestaPremio());
-                String datosPaginas=String.format(formatoPaginas, libro.getNumeroPaginas());
                 String datosTiempo=String.format(formatoTiempo, libro.calculoTiempoLecturaLibro(ritmoLectura));
                 String datosPrecio=String.format(formatoPrecio, libro.getPrecioLibro());
-                //imprimir por pantalla
+                //centrar páginas
+                String pagsCentrar=Integer.toString(libro.getNumeroPaginas());
+                int espTotal=maxPaginas-pagsCentrar.length();
+                int espIzq=espTotal/2;
+                int espDer=espTotal-espIzq;
+                String datosPaginas=" ".repeat(espIzq)+pagsCentrar+" ".repeat(espDer);
+                //imprimimos por pantalla
                 System.out.println("| "+ datosTitulo + " | "+ datosAno + " | " + datosAutor + " | " + datosPremio + " | "+datosPaginas+" | "+datosTiempo+" | "+datosPrecio+" €|");
             }else{
                 System.err.println("No hay información de libros en esta posición.");
