@@ -20,6 +20,9 @@ public class Almacen {
     public Libro[] getLibrosAlmacen(){
         return librosAlmacen;
     }
+    public int getContadorLibros(){
+        return contadorLibros;
+    }
 
     //Setters
     public void setTamañoAlmacen(int tamañoAlmacen){
@@ -31,12 +34,12 @@ public class Almacen {
 
     //Método para añadir libro al almacén en posiciones vacías
     public void añadirLibro(Libro libro){
-        if (contadorLibros<tamañoAlmacen){
+        if (contadorLibros>=tamañoAlmacen){
+            System.err.println("Error.Almacén lleno");
+        } else {
             librosAlmacen[contadorLibros]=libro;
             contadorLibros++;
-             System.out.println("Libro añadido con éxito");
-        } else {
-            System.err.println("Error.Almacén lleno");
+            System.out.println("Libro añadido con éxito");
         }
     }
 
@@ -61,6 +64,7 @@ public class Almacen {
                 valorTotal+=libro.getPrecioLibro();
             }
         }
-        return valorTotal;
+        //quiero que me devuelva el valor con dos decimales
+        return Math.round(valorTotal*100.0)/100.0;
     }
 }

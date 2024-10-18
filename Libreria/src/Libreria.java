@@ -10,6 +10,7 @@ public class Libreria {
     private static Autor autor1;
     private static Libro libro1;
     private static int ritmoLectura=1; //por defecto es 1 página por minuto
+    private static int tamañoNuevoAlmacen;
     public static void main(String[] args) throws Exception {
 /*
 |--------------------------------------------------------| 
@@ -60,7 +61,7 @@ Seleccione una opción (1-5):  */
 
     //Método para opción 1
     private static void nuevoAlmacen(){
-        int tamañoNuevoAlmacen= Esdia.readInt("Inserte el tamaño del nuevo almacén: ");
+        tamañoNuevoAlmacen= Esdia.readInt("Inserte el tamaño del nuevo almacén: ");
         almacen1=new Almacen(tamañoNuevoAlmacen);
         System.out.printf("Tamaño del nuevo almacen creado: %d \n",almacen1.getLibrosAlmacen().length);
     }
@@ -75,6 +76,10 @@ Seleccione una opción (1-5):  */
         //si el almacén no está creado,no puede añadir libro
         if (almacen1==null){
             System.err.println("Error. No se ha creado almacén para poder añadir el libro.");
+            return;
+        }
+        if(almacen1.getContadorLibros()>=tamañoNuevoAlmacen){
+            System.err.println("Error. El almacén está lleno");
             return;
         }
         //pedimos al usuario por pantalla que introduzca los datos del autor
@@ -132,6 +137,14 @@ Seleccione una opción (1-5):  */
                 }
             }
         }
+
+        if((Integer.toString(almacen1.tiempoLecturaTotal(ritmoLectura))).length()>=maxTiempo){
+            maxTiempo=(Integer.toString(almacen1.tiempoLecturaTotal(ritmoLectura))).length();
+        }
+        if((Double.toString(almacen1.valorTotalAlmacen())).length()>=maxPrecio){
+            maxPrecio=(Double.toString(almacen1.valorTotalAlmacen())).length();
+        }
+
         //Calculamos el ancho total de la tabla con los separadores y los |.
         int ANCHO_TOTAL=maxTitulo+maxAutor+maxAno+maxPlaneta+maxPaginas+maxTiempo+maxPrecio+21; 
       
@@ -143,9 +156,9 @@ Seleccione una opción (1-5):  */
         String formatoAutor="%-"+maxAutor+"s"; //a la izquierda
         String formatoAno="%-"+maxAno+"s"; //a la izquierda
         String formatoPremio="%-"+maxPlaneta+"s"; //a la izquierda
-        String formatoPaginas="%"+maxPaginas+"s"; //centrado
         String formatoTiempo="%"+maxTiempo+"s"; //a la derecha
         String formatoPrecio="%"+maxPrecio+"s"; //a la derecha
+        String formatoPaginas="%"+maxPaginas+"s"; //centrado
 
         //Procedemos a mostrar la tabla:
         //si no está creado el almacén o no hay libros añadidos, no hay tabla que mostrar
@@ -157,7 +170,7 @@ Seleccione una opción (1-5):  */
         System.out.println("|"+barrita+"|");
         System.out.println("| LIBROS EN EL ALMACÉN"+espacios+"|");
         System.out.println("|"+barrita+"|");
-        System.out.printf("| "+ formatoTitulo + " | "+ formatoAno + " | " + formatoAutor +" | " + formatoPremio + " | "+formatoPaginas+" | "+formatoTiempo+" | "+formatoPrecio+"|\n","Título", "Año Publicación", "Autor", "Premio planeta", "Páginas","Tiempo lectura (min)","Precio");
+        System.out.printf("| "+ formatoTitulo + " | "+ formatoAno + " | " + formatoAutor +" | " + formatoPremio + " | "+formatoPaginas+" | "+formatoTiempo+" |   "+formatoPrecio+"|\n","Título", "Año Publicación", "Autor", "Premio planeta", "Páginas","Tiempo lectura (min)","Precio");
         System.out.println("|"+barrita+"|");
         //Imprimimos por pantalla la información de cada libro
         for (Libro libro : almacen1.getLibrosAlmacen()) {
@@ -171,13 +184,13 @@ Seleccione una opción (1-5):  */
                 String datosTiempo=String.format(formatoTiempo, libro.calculoTiempoLecturaLibro(ritmoLectura));
                 String datosPrecio=String.format(formatoPrecio, libro.getPrecioLibro());
                 //imprimir por pantalla
-                System.err.println("| "+ datosTitulo + " | "+ datosAno + " | " + datosAutor + " | " + datosPremio + " | "+datosPaginas+" | "+datosTiempo+" | "+datosPrecio+" €|");
+                System.out.println("| "+ datosTitulo + " | "+ datosAno + " | " + datosAutor + " | " + datosPremio + " | "+datosPaginas+" | "+datosTiempo+" | "+datosPrecio+" €|");
             }else{
                 System.err.println("No hay información de libros en esta posición.");
             }
         }
         System.out.println("|"+barrita+"|");
-        System.out.println("| Tiempo de lectura total del almacén:"+" ".repeat(ANCHO_TOTAL-maxPrecio-maxTiempo-43)+String.format(formatoTiempo,almacen1.tiempoLecturaTotal(ritmoLectura))+"min | "+" ".repeat(maxPrecio)+"|");
+        System.out.println("| Tiempo de lectura total del almacén:"+" ".repeat(ANCHO_TOTAL-maxPrecio-maxTiempo-45)+String.format(formatoTiempo,almacen1.tiempoLecturaTotal(ritmoLectura))+"min | "+" ".repeat(maxPrecio)+"  |");
         System.out.println("| Valor total del almacén:"+" ".repeat(ANCHO_TOTAL-maxPrecio-27)+String.format(formatoPrecio,almacen1.valorTotalAlmacen())+" €|");
         System.out.println("|"+barrita+"|");
     }
