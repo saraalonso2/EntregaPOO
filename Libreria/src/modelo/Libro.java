@@ -32,7 +32,8 @@ public class Libro {
         return numPaginasLibro;
     }
     public double getPrecioLibro(){
-        return precioLibro;
+        //para que se muestre siempre con dos decimales
+        return Math.round(precioLibro*100.0)/100.0;
     }
 
     //Setters
